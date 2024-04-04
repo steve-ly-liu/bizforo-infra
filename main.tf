@@ -3,10 +3,10 @@
 terraform {
   required_providers {
     aws = {
-        version = "~> 3.44.0"
+      version = "~> 4.16.0"
     }
   }
-  required_version = ">= 1.0.0"
+  required_version = ">= 1.2.0"
 }
 
 provider "aws" {
@@ -22,8 +22,8 @@ module "vpc" {
 #Deploy Compute Resources
 #=========================
 module "compute" {
-  source            = "./modules/compute"
-  subnets           = module.vpc.bf_public_subnets
-  security_group    = module.vpc.bf_public_sg
-  subnet_ips        = module.vpc.bf_subnet_ips
+  source         = "./modules/compute"
+  subnets        = module.vpc.bf_public_subnets
+  security_group = module.vpc.bf_public_sg
+  subnet_ips     = module.vpc.bf_subnet_ips
 }

@@ -1,6 +1,6 @@
 #------ variables.tf --------
 #============================
 variable "region" {
-  type = string
+  type    = string
   default = "ca-central-1"
 }

@@ -6,7 +6,7 @@ provider "aws" {
 
 #Get all available AZ's in VPC for this region
 #===============================================
-data "aws_availability_zone" "bf_azs" {
+data "aws_availability_zones" "bf_azs" {
     state = "available"
 }
 
@@ -34,7 +34,7 @@ resource "aws_internet_gateway" "bf_igw" {
 #===========================================
 resource "aws_route_table" "bf_public_route" {
     vpc_id = aws_vpc.bf_vpc.id
-    route = {
+    route {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.bf_igw.id
     }
@@ -46,7 +46,7 @@ resource "aws_route_table" "bf_public_route" {
 #Create subnet#1 in ca-central-1
 #================================
 resource "aws_subnet" "bf_public_subnet" {
-  availability_zone = element(data.aws_availability_zone.bf_azs.names, 0)
+  availability_zone = element(data.aws_availability_zones.bf_azs.names, 0)
   vpc_id            = aws_vpc.bf_vpc.id
   cidr_block        =  "10.0.1.0/24"
   tags = {
@@ -55,7 +55,7 @@ resource "aws_subnet" "bf_public_subnet" {
 }
 resource "aws_route_table_association" "bf_public_assoc" {
   subnet_id         = aws_subnet.bf_public_subnet.id
-  route_table_id    = aws_subnet.bf_public_route.id
+  route_table_id    = aws_route_table.bf_public_route.id
 }
 
 #Create SG for allowing TCP/80 & TCP/22 & TCP/9000
