@@ -26,5 +26,5 @@ variable "ssh_key_public" {
 variable "ssh_key_private" {
   type = string
   #Replace this with the location of your private key
-  default = "/home/steveliu/.ssh/id_ed22519"
+  default = "/home/steveliu/.ssh/id_ed25519"
 }
