@@ -31,17 +31,18 @@ resource "aws_instance" "webserver" {
   associate_public_ip_address   = true
   vpc_security_group_ids        = [var.security_group.id]
   subnet_id                     = var.subnets
-  user_data                     = data.template_file.user-init.rendered
+  #This is used for the userdata.tpl
+  #user_data                     = data.template_file.user-init.rendered
   key_name                      = aws_key_pair.aws-key.key_name
   tags = {
     Name = "bf_webserver"
   }
   
   connection {
-    type = "ssh"
-    user = "ec2-user"
+    type        = "ssh"
+    user        = "ec2-user"
     private_key = file(var.ssh_key_private)
-    host = self.public_ip
+    host        = self.public_ip
   }
 
   # Copy the file from local machine to EC2
