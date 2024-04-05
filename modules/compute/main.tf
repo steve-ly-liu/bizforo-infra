@@ -17,11 +17,11 @@ resource "aws_key_pair" "aws-key" {
   public_key = file(var.ssh_key_public)
 }
 
-# Template file
-#=================
-data "template_file" "user-init" {
-  template = file("${path.module}/userdata.tpl")
-}
+# Template file is deprecated and is replaced with Ansible
+#==========================================================
+#data "template_file" "user-init" {
+#  template = file("${path.module}/userdata.tpl")
+#}
 
 #Create and bootstrap webserver
 #==============================
@@ -44,4 +44,19 @@ resource "aws_instance" "webserver" {
     host = self.public_ip
   }
 
+  # Copy the file from local machine to EC2
+  provisioner "file" {
+    source      = "install_apache.yaml"
+    destination = "install_apache.yaml"
+  }
+
+  #Execute a script on a remote resource
+  provisioner "remote-exec" {
+    inline =[
+      "sudo yum update -y && sudo amazon-linux-extras install ansible2 -y",
+      "sleep 60s",
+      "ansible-playbook install_apache.yaml"
+    ]
+    
+  }
 }
