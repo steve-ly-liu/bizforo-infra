@@ -1,6 +1,6 @@
 ---
 - name: Web Server
-  host: localhost
+  hosts: localhost
   remote_user: ec2-user
   become: true
 
@@ -18,7 +18,7 @@
   
   - name: Copy CSCC1030-master directory contents into /var/www/html
     ansible.builtin.copy:
-      src: /tmp/CSCC1030-master
+      src: /tmp/CSCC1030-master/
       dest: /var/www/html
   
   - name: Ensure httpd is running

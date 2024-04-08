@@ -20,11 +20,11 @@ variable "subnets" {
 variable "ssh_key_public" {
   type = string
   #Replace this with the location of you public key .pub
-  default = "/home/steveliu/.ssh/id_ed25519.pub"
+  default = "/home/steveliu/.ssh/id_rsa.pub"
 }
 
 variable "ssh_key_private" {
   type = string
   #Replace this with the location of your private key
-  default = "/home/steveliu/.ssh/id_ed25519"
+  default = "/home/steveliu/.ssh/id_rsa"
 }
